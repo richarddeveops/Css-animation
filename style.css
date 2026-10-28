@@ -1,0 +1,55 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    background-color: lightgray;
+}
+.Anime {
+    background-color: lightgoldenrodyellow;
+    width: 200px;
+    height: 200px;
+    transform: rotate(10deg);
+}
+        .Dodge-challenger{
+            height: 100px;
+            width: 100px;
+            /* animation: Dodge 2s  1s delay iteration-count direction fill-mode; */
+            animation-name: dodge;
+            margin: 40px;
+            top: 64%;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            position: absolute;
+            animation-duration: 3s;
+            /* direction: normal; */
+            animation-iteration-count: infinite;
+            /* animation-delay: 2s; */
+        }
+        @keyframes dodge {
+            0% {
+                /* top: 0%; */
+                /* transform: rotate(30deg); */
+                transform: translateX(0px);
+            }
+            25% {
+                transform: translateX(200px);
+                /* transform: rotate(40deg); */
+                /* top: 20%; */
+            }
+            50% {
+                transform: translateX(500px);
+                /* transform: rotate(40deg); */
+                /* top: 20%; */
+            }
+            75% {
+                transform: translateX(1000px);
+                /* transform: rotate(40deg); */
+                /* top: 20%; */
+            }
+            100% {
+                transform: translateX(2000px);
+                /* transform: rotate('angle' 60deg); */
+            }
+        }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car</title>
+    <style>
+        /* Remove default spacing so sizes are predictable */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: lightgray; /* shows if the image fails to load */
+            background-image: url("./asset/wallpaperflare.com_wallpaper.jpg"); /* quotes protect the URL */
+            background-repeat: no-repeat;
+            background-size: cover;
+            /* background-position: center; */
+            /* min-height: 100vh; */
+            overflow-x: hidden; /* stops a sideways scrollbar when the car flies off-screen */
+        }
+
+        .Dodge-challenger {
+    position: absolute;
+    top: 59%;
+    left: 0;
+    width: 160px;
+    animation: dodge 10s linear infinite; /* 10s instead of 8s so the landing isn't rushed */
+}
+
+@keyframes dodge {
+    0%   { transform: translate(-20vw, 0) rotate(0deg);     animation-timing-function: linear; }      /* off-screen left, on the road */
+    15%  { transform: translate(15vw, 0) rotate(0deg);      animation-timing-function: ease-in; }     /* driving */
+    25%  { transform: translate(28vw, 0) rotate(-12deg);    animation-timing-function: ease-in-out; } /* nose lifts, wheels still on the ground */
+    38%  { transform: translate(42vw, -30vh) rotate(-15deg); animation-timing-function: ease-in-out; } /* climbing */
+    50%  { transform: translate(55vw, -38vh) rotate(0deg);  animation-timing-function: ease-in-out; } /* top of the arc, level */
+    62%  { transform: translate(68vw, -28vh) rotate(12deg); animation-timing-function: ease-in-out; } /* nose down, descending */
+    72%  { transform: translate(78vw, 0) rotate(5deg);      animation-timing-function: ease-out; }    /* touchdown */
+    76%  { transform: translate(82vw, 0) rotate(-2deg);     animation-timing-function: ease-out; }    /* small bounce from landing */
+    80%  { transform: translate(86vw, 0) rotate(0deg);      animation-timing-function: linear; }      /* settled */
+    100% { transform: translate(130vw, 0) rotate(0deg); }                                             /* drives away, then loops */
+}
+    </style>
+</head>
+<body>
+    <div class="Dodge-challenger">
+        <img src="./asset/images-removebg-preview.png" alt="Flying car" >
+    </div>
+</body>
+</html>
