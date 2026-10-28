@@ -5,48 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car</title>
     <style>
-        /* Remove default spacing so sizes are predictable */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root { --t: 12s; } /* one clock for every layer. Change it here only. */
 
         body {
-            background-color: lightgray; /* shows if the image fails to load */
-            background-image: url("./asset/wallpaperflare.com_wallpaper.jpg"); /* quotes protect the URL */
+            background-color: lightgray;
+            background-image: url("./asset/wallpaperflare.com_wallpaper.jpg");
             background-repeat: no-repeat;
             background-size: cover;
-            /* background-position: center; */
-            /* min-height: 100vh; */
-            overflow-x: hidden; /* stops a sideways scrollbar when the car flies off-screen */
+            background-position: center;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .Dodge-challenger {
-    position: absolute;
-    top: 59%;
-    left: 0;
-    width: 160px;
-    animation: dodge 10s linear infinite; /* 10s instead of 8s so the landing isn't rushed */
-}
+        /* LAYER 1: sideways movement + the car's home position */
+        .car-x {
+            position: absolute;
+            top: 59%;
+            left: 5vw;                      /* the starting spot */
+            width: clamp(90px, 14vw, 170px);/* scales on phones */
+            animation: move-x var(--t) infinite;
+        }
+        /* LAYER 2: height */
+        .car-y    { animation: move-y var(--t) infinite; }
+        /* LAYER 3: tilt */
+        .car-tilt { animation: tilt   var(--t) infinite; }
 
-@keyframes dodge {
-    0%   { transform: translate(-20vw, 0) rotate(0deg);     animation-timing-function: linear; }      /* off-screen left, on the road */
-    15%  { transform: translate(15vw, 0) rotate(0deg);      animation-timing-function: ease-in; }     /* driving */
-    25%  { transform: translate(28vw, 0) rotate(-12deg);    animation-timing-function: ease-in-out; } /* nose lifts, wheels still on the ground */
-    38%  { transform: translate(42vw, -30vh) rotate(-15deg); animation-timing-function: ease-in-out; } /* climbing */
-    50%  { transform: translate(55vw, -38vh) rotate(0deg);  animation-timing-function: ease-in-out; } /* top of the arc, level */
-    62%  { transform: translate(68vw, -28vh) rotate(12deg); animation-timing-function: ease-in-out; } /* nose down, descending */
-    72%  { transform: translate(78vw, 0) rotate(5deg);      animation-timing-function: ease-out; }    /* touchdown */
-    76%  { transform: translate(82vw, 0) rotate(-2deg);     animation-timing-function: ease-out; }    /* small bounce from landing */
-    80%  { transform: translate(86vw, 0) rotate(0deg);      animation-timing-function: linear; }      /* settled */
-    100% { transform: translate(130vw, 0) rotate(0deg); }                                             /* drives away, then loops */
-}
+        .car-tilt img {
+            /* width: 100%; */
+            display: block;
+            animation: turn var(--t) infinite; /* flips to face left on the way back */
+        }
+
+        /* Each keyframe's timing-function controls the stretch AFTER it. */
+
+        @keyframes move-x {
+            0%   { transform: translateX(0);    animation-timing-function: linear; }       /* rest at start */
+            10%  { transform: translateX(0);    animation-timing-function: ease-in; }      /* pull away */
+            20%  { transform: translateX(6vw);  animation-timing-function: linear; }       /* cruising speed (same through the air) */
+            65%  { transform: translateX(62vw); animation-timing-function: ease-out; }     /* touchdown, then brake */
+            75%  { transform: translateX(68vw); animation-timing-function: linear; }       /* stopped */
+            82%  { transform: translateX(68vw); animation-timing-function: ease-in-out; }  /* turned around, now drive back */
+            100% { transform: translateX(0); }                                             /* exactly where it began */
+        }
+
+        @keyframes move-y {
+            0%, 35% { transform: translateY(0);     animation-timing-function: ease-out; } /* wheels on road */
+            50%     { transform: translateY(-30vh); animation-timing-function: ease-in; }  /* top of the arc */
+            65%, 100% { transform: translateY(0); }                                        /* landed */
+        }
+
+        @keyframes tilt {
+            0%, 33% { transform: rotate(0deg);   animation-timing-function: ease-in-out; }
+            42%     { transform: rotate(-14deg); animation-timing-function: ease-in-out; } /* nose up */
+            50%     { transform: rotate(0deg);   animation-timing-function: ease-in-out; } /* level at the top */
+            58%     { transform: rotate(12deg);  animation-timing-function: ease-in-out; } /* nose down */
+            65%     { transform: rotate(3deg);   animation-timing-function: ease-in-out; } /* touchdown */
+            70%, 100% { transform: rotate(0deg); }
+        }
+
+        @keyframes turn {
+            0%, 77%   { transform: scaleX(1); }   /* facing right */
+            78%, 99%  { transform: scaleX(-1); }  /* facing left for the drive back */
+            100%      { transform: scaleX(1); }   /* faces right again for the loop */
+        }
     </style>
 </head>
 <body>
-    <div class="Dodge-challenger">
-        <img src="./asset/images-removebg-preview.png" alt="Flying car" >
+    <div class="car-x">
+        <div class="car-y">
+            <div class="car-tilt">
+                <img src="./asset/images-removebg-preview.png" alt="Flying car">
+            </div>
+        </div>
     </div>
 </body>
 </html>
